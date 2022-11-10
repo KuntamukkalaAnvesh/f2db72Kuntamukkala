@@ -1,5 +1,5 @@
 # f2wb72Kuntamukkala
-[Render server](https://f2wb72kuntamukkala.onrender.com)
+[Render server](https://f2db72kuntamukkala-n4xo.onrender.com)
 
 ```
 class Bear{
