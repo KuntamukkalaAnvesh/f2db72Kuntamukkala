@@ -1,9 +1,25 @@
 var Bear = require('../models/Bear');
 // List of all Costumes
 // for a specific Costume.
-exports.Bear_detail = function(req, res) {
+// for a specific Costume. 
+exports.Bear_detail = async function(req, res) { 
+    console.log("detail"  + req.params.id) 
+    try { 
+        result = await Bear.findById( req.params.id) 
+        res.send(result) 
+    } catch (error) { 
+        res.status(500) 
+        res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
+}; 
+ 
+
+/*exports.Bear_detail = function(req, res) {
  res.send('NOT IMPLEMENTED: Bear detail: ' + req.params.id);
-};
+};*/
+
+
+
 // Handle Costume create on POST.
 exports.Bear_create_post = function(req, res) {
  res.send('NOT IMPLEMENTED: Bear create POST');
@@ -13,8 +29,29 @@ exports.Bear_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: Bear delete DELETE ' + req.params.id);
 };
 // Handle Costume update form on PUT.
-exports.Bear_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: Bear update PUT' + req.params.id);
+exports.Bear_update_put = async function(req, res) {
+ //res.send('NOT IMPLEMENTED: Bear update PUT' + req.params.id);
+
+ console.log(`update on id ${req.params.id} with body 
+ ${JSON.stringify(req.body)}`) 
+     try { 
+         let toUpdate = await Bear.findById( req.params.id) 
+         // Do updates of properties 
+         if(req.body.Bear_name)  
+                toUpdate.Bear_name = req.body.Bear_name; 
+         if(req.body.Bear_size) 
+         toUpdate.Bear_size = req.body.Bear_size; 
+         if(req.body.Bear_type) 
+         toUpdate.Bear_type = req.body.Bear_type; 
+         let result = await toUpdate.save(); 
+         console.log("Sucess " + result) 
+         res.send(result) 
+     } catch (err) { 
+         res.status(500) 
+         res.send(`{"error": ${err}: Update for id ${req.params.id} 
+ failed`); 
+     } 
+
 };
 // VIEWS
 
