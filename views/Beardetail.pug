@@ -1,0 +1,23 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null) 
+    h2 No instance to delete 
+  else    
+    - let Bearid = toShow._id
+    - let Bear_type = toShow.Bear_type
+    - let Bear_size = toShow.Bear_size
+    - let Bear_name = toShow.Bear_name
+    div
+    div.row
+    div(class='BearAttr mr-3') Bear ID is:
+    div #{Bearid}
+    div.row
+    div(class='BearAttr mr-3') Bear Type is:
+    div #{Bear_type}
+    div.row
+    div(class='BearAttr mr-3') Bear Size is:
+    div #{Bear_size}
+    div.row
+    div(class='BearAttr mr-3') Bear name is:
+    div #{Bear_name}

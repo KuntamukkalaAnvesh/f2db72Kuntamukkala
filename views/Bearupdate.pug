@@ -1,0 +1,42 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null) 
+    h2 No instance to delete 
+  else      
+    - let Bearid = toShow._id
+    - let Bear_type = toShow.Bear_type
+    - let Bear_name = toShow.Bear_name
+    - let Bear_size = toShow.Bear_size
+    div.row(class='mb-2')
+        div.mr-1 ID is
+        div #{Bearid}
+    - let actionid = "/resource/Bear/" + Bearid
+    form(id='BearForm', action= actionid, method="PUT")
+        div.form-group
+            label.BearAttr(for='Bear_type') Bear type
+            input#Bear_type(type='text', name='Bear_type', value= Bear_type )
+        div.form-group
+            label.BearAttr(for='Bear_size') Bear size
+            input#Bear_size(type='number', name='Bear_size', value= Bear_size )
+        div.form-group
+            label.BearAttr(for='Bear_name') Bear name
+            input#Bear_name(type='text', name='Bear_name', value= Bear_name )
+        input(type="submit")
+    script.
+        document.forms['BearForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+        }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+        });
+        });
